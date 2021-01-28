@@ -1,0 +1,62 @@
+<div class="form-flex" *ngIf="task !== undefined" [formGroup]="form">
+    <mat-card>
+        <mat-card-title>
+            {{task.name}}
+        </mat-card-title>
+        <mat-card-content>
+            <div *ngFor="let field of task.formFields; let i = index;">
+                <div [ngSwitch]="field.type.name">
+
+                    <mat-form-field *ngSwitchCase="'password'">
+                        <mat-label>{{field.label}}</mat-label>
+                        <input matInput type="password" [formControlName]="field.id">
+                        <mat-error *ngIf="form.get(field.id).invalid && (form.get(field.id).dirty || form.get(field.id).touched)">
+                            <div *ngIf="form.get(field.id).errors.required"> {{field.label}} is required</div>
+                            <div *ngIf="!form.get(field.id).errors.required && (form.get(field.id).errors.minlength || form.get(field.id).errors.maxlength)">
+                                Field {{field.label}} length is invalid
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngSwitchCase="'email'">
+                        <mat-label>{{field.label}}</mat-label>
+                        <input matInput type="email" [formControlName]="field.id">
+                        <mat-error *ngIf="form.get(field.id).invalid && (form.get(field.id).dirty || form.get(field.id).touched)">
+                            <div *ngIf="form.get(field.id).errors.required"> {{field.label}} is required</div>
+                            <div *ngIf="form.get(field.id).errors.email"> {{field.label}} format is expected</div>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngSwitchCase="'collection'">
+                        <mat-label>{{field.label}}</mat-label>
+                        <mat-select [formControlName]="field.id" multiple>
+                            <mat-option *ngFor="let item of field.type.values | keyvalue" [value]="item.key"
+                                        (onSelectionChange)="updateGenres(item)">
+                                {{item.value}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="form.get(field.id).invalid && (form.get(field.id).dirty || form.get(field.id).touched)">
+                            <div *ngIf="form.get(field.id).errors.required"> {{field.label}} are required</div>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field *ngSwitchDefault>
+                        <mat-label>{{field.label}}</mat-label>
+                        <input matInput [formControlName]="field.id">
+                        <mat-error *ngIf="form.get(field.id).invalid && (form.get(field.id).dirty || form.get(field.id).touched)">
+                            <div *ngIf="form.get(field.id).errors.required"> {{field.label}} is required</div>
+                            <div *ngIf="!form.get(field.id).errors.required && (form.get(field.id).errors.minlength || form.get(field.id).errors.maxlength)">
+                                Field {{field.label}} length is invalid
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="button-flex-container">
+                <button mat-raised-button color="primary" [disabled]="form.invalid">Register</button>
+            </div>
+        </mat-card-actions>
+    </mat-card>
+</div>
