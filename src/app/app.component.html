@@ -1,15 +1,17 @@
 <p>
     <mat-toolbar>
-        <!--<button mat-icon-button>
-          <mat-icon>menu</mat-icon>
-        </button>-->
-        <span class="title" routerLink="/">Literarno udruženje</span>
+        <span class="title" routerLink="/">{{title}}</span>
         <span class="toolbar-spacer"></span>
-        <button mat-icon-button class="favorite-icon" routerLink="/registration">
+        <button mat-icon-button *ngIf="!isLoggedIn()" routerLink="/registration">
             <mat-icon>person_add</mat-icon>
         </button>
-        <button mat-icon-button>
+        <button mat-icon-button *ngIf="!isLoggedIn()" routerLink="/login">
             <mat-icon>login</mat-icon>
+        </button>
+        <span class="title" *ngIf="isLoggedIn()" routerLink="/profile">{{name}}</span>
+        <span class="title role" *ngIf="isLoggedIn()" routerLink="/profile">{{role}}</span>
+        <button mat-icon-button *ngIf="isLoggedIn()" (click)="logout()">
+            <mat-icon>logout</mat-icon>
         </button>
     </mat-toolbar>
 </p>

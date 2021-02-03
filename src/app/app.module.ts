@@ -18,11 +18,19 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MatOptionModule} from "@angular/material/core";
 import {MatSelectModule} from "@angular/material/select";
 
+
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {LoginComponent} from './component/login/login.component';
+import {ProfileComponent} from './component/profile/profile.component';
+import {MatTableModule} from "@angular/material/table";
+
 @NgModule({
     declarations: [
         AppComponent,
         RegistrationComponent,
-        VerificationComponent
+        VerificationComponent,
+        LoginComponent,
+        ProfileComponent
     ],
     imports: [
         BrowserModule,
@@ -38,7 +46,9 @@ import {MatSelectModule} from "@angular/material/select";
         MatInputModule,
         ReactiveFormsModule,
         MatOptionModule,
-        MatSelectModule
+        MatSelectModule,
+        MatSnackBarModule,
+        MatTableModule
     ],
     providers: [],
     bootstrap: [AppComponent]

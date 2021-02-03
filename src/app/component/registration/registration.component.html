@@ -55,7 +55,7 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="button-flex-container">
-                <button mat-raised-button color="primary" [disabled]="form.invalid">Register</button>
+                <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submitForm()">Register</button>
             </div>
         </mat-card-actions>
     </mat-card>

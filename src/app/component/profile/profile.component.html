@@ -1,0 +1,104 @@
+<table mat-table
+       [dataSource]="tasks" multiTemplateDataRows
+       class="mat-elevation-z8 profile-table">
+
+    <ng-container matColumnDef="assignee">
+        <th mat-header-cell *matHeaderCellDef> Assignee</th>
+        <td mat-cell *matCellDef="let element"> {{element.assignee}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef> Task id</th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Task name</th>
+        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="processInstanceId">
+        <th mat-header-cell *matHeaderCellDef> Process instance id</th>
+        <td mat-cell *matCellDef="let element"> {{element.processInstanceId}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="process">
+        <th mat-header-cell *matHeaderCellDef> Process</th>
+        <td mat-cell *matCellDef="let element"> {{element.process}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-raised-button color="primary">
+                Execute
+            </button>
+        </td>
+    </ng-container>
+    <ng-container matColumnDef="expandedDetail" *ngIf="'ADMIN' === getUser().role">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail"
+                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div>
+                    <table class="inner-table">
+                        <tr>
+                            <th class="inner-th" *ngFor="let exph of expandedDisplayedColumns">{{exph}}</th>
+                        </tr>
+                        <tr *ngFor="let exp of expandedData">
+                            <td class="inner-td">{{exp.name}}</td>
+                            <td class="inner-td">{{exp.value}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+<!--
+<br>
+<table mat-table *ngIf="'ADMIN' === getUser().role"
+       [dataSource]="tasks" multiTemplateDataRows
+       class="mat-elevation-z8 profile-table">
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
+        <th mat-header-cell *matHeaderCellDef> {{column.toUpperCase()}} </th>
+        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    </ng-container>
+
+
+    <ng-container matColumnDef="expandedDetail">
+        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+            <div class="example-element-detail"
+                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                <div>
+                    <table class="inner-table">
+                        <tr>
+                            <th class="inner-th" *ngFor="let exph of expandedDisplayedColumns">{{exph}}</th>
+                        </tr>
+                        <tr *ngFor="let exp of expandedData">
+                            <td class="inner-td">{{exp.name}}</td>
+                            <td class="inner-td">{{exp.value}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
+        class="example-element-row"
+        [class.example-expanded-row]="expandedElement === element"
+        (click)="expandedElement = expandedElement === element ? null : element">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+</table>
+-->

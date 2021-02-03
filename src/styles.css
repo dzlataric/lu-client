@@ -1,5 +1,44 @@
 /* You can add global styles to this file, and also import other style files */
 @import "@angular/material/prebuilt-themes/deeppurple-amber.css";
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.success-snackbar {
+    background: green;
+    margin: 0 !important;
+    position: absolute;
+    right: 25px;
+    top: 80px;
+}
+
+.error-snackbar {
+    background: red;
+    margin: 0 !important;
+    position: absolute;
+    right: 25px;
+    top: 80px;
+}
+
+.form-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80%;
+}
+
+.button-flex-container {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+}
+
+.role {
+    color: green;
+}
