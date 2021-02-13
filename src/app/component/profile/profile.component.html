@@ -30,7 +30,7 @@
     <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef> Action</th>
         <td mat-cell *matCellDef="let element">
-            <button mat-raised-button color="primary">
+            <button mat-raised-button color="primary" (click)="executeTask(element.id)" [disabled]="'ADMIN' === getUser().role">
                 Execute
             </button>
         </td>
@@ -44,8 +44,8 @@
                         <tr>
                             <th class="inner-th" *ngFor="let exph of expandedDisplayedColumns">{{exph}}</th>
                         </tr>
-                        <tr *ngFor="let exp of expandedData">
-                            <td class="inner-td">{{exp.name}}</td>
+                        <tr *ngFor="let exp of expandedData | keyvalue">
+                            <td class="inner-td">{{exp.key}}</td>
                             <td class="inner-td">{{exp.value}}</td>
                         </tr>
                     </table>
@@ -59,46 +59,9 @@
     <tr mat-row *matRowDef="let element; columns: displayedColumns;"
         class="example-element-row"
         [class.example-expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
+        (click)="expandedElement = expandedElement === element ? null : element; log(element)">
     </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-</table>
-<!--
-<br>
-<table mat-table *ngIf="'ADMIN' === getUser().role"
-       [dataSource]="tasks" multiTemplateDataRows
-       class="mat-elevation-z8 profile-table">
-    <ng-container matColumnDef="{{column}}" *ngFor="let column of displayedColumns">
-        <th mat-header-cell *matHeaderCellDef> {{column.toUpperCase()}} </th>
-        <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
+    <ng-container *ngIf="'ADMIN' === getUser().role">
+        <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
     </ng-container>
-
-
-    <ng-container matColumnDef="expandedDetail">
-        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-            <div class="example-element-detail"
-                 [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                <div>
-                    <table class="inner-table">
-                        <tr>
-                            <th class="inner-th" *ngFor="let exph of expandedDisplayedColumns">{{exph}}</th>
-                        </tr>
-                        <tr *ngFor="let exp of expandedData">
-                            <td class="inner-td">{{exp.name}}</td>
-                            <td class="inner-td">{{exp.value}}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </td>
-    </ng-container>
-
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let element; columns: displayedColumns;"
-        class="example-element-row"
-        [class.example-expanded-row]="expandedElement === element"
-        (click)="expandedElement = expandedElement === element ? null : element">
-    </tr>
-    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
 </table>
--->

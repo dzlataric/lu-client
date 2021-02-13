@@ -4,6 +4,7 @@ import {RegistrationComponent} from "./component/registration/registration.compo
 import {VerificationComponent} from "./component/verification/verification.component";
 import {LoginComponent} from "./component/login/login.component";
 import {ProfileComponent} from "./component/profile/profile.component";
+import {TaskComponent} from "./component/task/task.component";
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
   {
     path: 'profile',
     component: ProfileComponent
+  },
+  {
+    path: 'task/:taskId',
+    component: TaskComponent
   }
 ];
 

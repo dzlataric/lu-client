@@ -6,5 +6,6 @@ export interface Task {
     assignee: string;
     process: string;
     processInstanceId: string;
+    variables: Map<string, any>;
     formFields: FormField[];
 }

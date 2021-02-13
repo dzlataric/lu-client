@@ -2,8 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Task} from 'src/app/objects/task';
 import {UsersService} from "../../service/users.service";
 import {NotificationService, NotificationType} from "../../service/notification.service";
-import {User} from "../../objects/user";
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Router} from "@angular/router";
+import {User} from "../../objects/user";
 
 @Component({
     selector: 'app-profile',
@@ -23,19 +24,15 @@ export class ProfileComponent implements OnInit {
     displayedColumns: string[] = ['assignee', 'id', 'name', 'processInstanceId', 'process', 'action'];
     expandedDisplayedColumns: string[] = ['name', 'value'];
     expandedElement: Task | null;
-    expandedData: any[] = [
-        {'name': 'prva', 'value': '1'},
-        {'name': 'druga', 'value': '2'},
-        {'name': 'treca', 'value': '3'}
-    ]
-
+    expandedData: Map<string, any> | null;
 
     constructor(private usersService: UsersService,
-                private notificationService: NotificationService) {
+                private notificationService: NotificationService,
+                private router: Router) {
     }
 
     ngOnInit(): void {
-        this.usersService.getActiveTasks(this.getUser().username).subscribe((res: Task[]) => {
+        this.usersService.getActiveTasks(this.usersService.getUser().username).subscribe((res: Task[]) => {
             console.log(res);
             this.tasks = res;
         }, err => {
@@ -43,9 +40,16 @@ export class ProfileComponent implements OnInit {
         });
     }
 
-    getUser(): User {
-        return JSON.parse(localStorage.getItem('user'));
+
+    log(task: Task) {
+        this.expandedData = task.variables;
     }
 
+    executeTask(taskId: string) {
+        this.router.navigate(["task", taskId]);
+    }
 
+    getUser(): User {
+        return this.usersService.getUser();
+    }
 }

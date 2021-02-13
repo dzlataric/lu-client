@@ -16,6 +16,10 @@ export class UsersService {
     constructor(private http: HttpClient) {
     }
 
+    getUser(): User {
+        return JSON.parse(localStorage.getItem('user'));
+    }
+
     login(loginData: User): Observable<User> {
         return this.http.post(this.baseUrl.concat('login'), loginData).pipe(map((res: User) => res));
     }

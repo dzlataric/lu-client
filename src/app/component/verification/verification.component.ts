@@ -23,7 +23,7 @@ export class VerificationComponent implements OnInit {
                 this.registrationService.verify(params.get('code')).subscribe(() => {
                     this.notificationService.showNotification('Verification successful! You will be redirected in 5 seconds.', NotificationType.SUCCESS);
                     setTimeout(() => {
-                            this.router.navigate(['/']);
+                            this.router.navigate(['/login']);
                         },
                         5000);
                 }, error => {

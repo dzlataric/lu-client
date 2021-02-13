@@ -1,12 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {RegistrationService} from "../../service/registration.service";
-import {FormControl, FormGroup, ValidatorFn, Validators} from "@angular/forms";
-import {ValidationConstraint} from "../../objects/validation-constraint";
+import {FormControl, FormGroup} from "@angular/forms";
 import {Task} from "../../objects/task";
 import {FormField} from "../../objects/form-field";
 import {FormSubmission} from "../../objects/form-submission";
 import {NotificationService, NotificationType} from "../../service/notification.service";
 import {Router} from "@angular/router";
+import {MatRadioChange} from "@angular/material/radio";
+import {ValidatorsService} from "../../service/validators.service";
 
 @Component({
     selector: 'app-registration',
@@ -19,9 +20,13 @@ export class RegistrationComponent implements OnInit {
     task: Task | undefined;
     selectedGenres: any[] = [];
     formSubmission: FormSubmission[] = [];
+    roleSelection: string[] = ['Writer', 'Reader'];
+    selectedRole: string = null;
+    selectionFinalized: boolean = false;
 
     constructor(private registrationService: RegistrationService,
                 private notificationService: NotificationService,
+                private validatorsService: ValidatorsService,
                 private router: Router) {
     }
 
@@ -36,33 +41,12 @@ export class RegistrationComponent implements OnInit {
             (task: Task) => {
                 this.task = task;
                 this.task.formFields.forEach((formField: FormField) => {
-                    this.form.addControl(formField.id, new FormControl('', this.prepareValidators(formField)));
+                    this.form.addControl(formField.id, new FormControl('', this.validatorsService.prepareValidators(formField)));
                 })
             },
             err => {
                 console.log('An error occurred: ' + err);
             });
-    }
-
-    prepareValidators(field: FormField) {
-        let validators: ValidatorFn[] = [];
-        if (field.validationConstraints) {
-            field.validationConstraints.forEach((constraint: ValidationConstraint) => {
-                if (constraint.name === 'required') {
-                    validators.push(Validators.required);
-                }
-                if (constraint.name === 'minlength') {
-                    validators.push(Validators.minLength(constraint.configuration));
-                }
-                if (constraint.name === 'maxlength') {
-                    validators.push(Validators.maxLength(constraint.configuration));
-                }
-                if (field.type.name === 'email') {
-                    validators.push(Validators.email);
-                }
-            });
-        }
-        return validators;
     }
 
     updateGenres(selected: any) {
@@ -91,4 +75,11 @@ export class RegistrationComponent implements OnInit {
         );
     }
 
+    checkCheckBoxvalue(event: MatRadioChange) {
+        this.selectedRole = event.value;
+    }
+
+    confirmSelection() {
+        this.selectionFinalized = true;
+    }
 }

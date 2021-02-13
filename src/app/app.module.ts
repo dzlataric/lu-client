@@ -23,6 +23,10 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {LoginComponent} from './component/login/login.component';
 import {ProfileComponent} from './component/profile/profile.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatCheckboxModule} from "@angular/material/checkbox";
+import {MatRadioModule} from "@angular/material/radio";
+import {TaskComponent} from './component/task/task.component';
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 @NgModule({
     declarations: [
@@ -30,7 +34,8 @@ import {MatTableModule} from "@angular/material/table";
         RegistrationComponent,
         VerificationComponent,
         LoginComponent,
-        ProfileComponent
+        ProfileComponent,
+        TaskComponent
     ],
     imports: [
         BrowserModule,
@@ -48,7 +53,10 @@ import {MatTableModule} from "@angular/material/table";
         MatOptionModule,
         MatSelectModule,
         MatSnackBarModule,
-        MatTableModule
+        MatTableModule,
+        MatCheckboxModule,
+        MatRadioModule,
+        MatProgressBarModule
     ],
     providers: [],
     bootstrap: [AppComponent]

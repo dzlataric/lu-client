@@ -1,9 +1,20 @@
 <div class="form-flex" *ngIf="task !== undefined" [formGroup]="form">
     <mat-card>
-        <mat-card-title>
+        <mat-radio-group *ngIf="!selectionFinalized"
+                         aria-labelledby="example-radio-group-label"
+                         class="example-radio-group"
+                         (change)="checkCheckBoxvalue($event)">
+            <mat-radio-button class="example-radio-button" *ngFor="let role of roleSelection" [value]="role">
+                {{role}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <div class="button-flex-container" *ngIf="!selectionFinalized">
+            <button mat-raised-button color="primary" (click)="confirmSelection()">Select</button>
+        </div>
+        <mat-card-title *ngIf="selectionFinalized">
             {{task.name}}
         </mat-card-title>
-        <mat-card-content>
+        <mat-card-content *ngIf="selectionFinalized">
             <div *ngFor="let field of task.formFields; let i = index;">
                 <div [ngSwitch]="field.type.name">
 
@@ -53,7 +64,7 @@
                 </div>
             </div>
         </mat-card-content>
-        <mat-card-actions>
+        <mat-card-actions *ngIf="selectionFinalized">
             <div class="button-flex-container">
                 <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submitForm()">Register</button>
             </div>

@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/profile']);
         }, err => {
             console.log(err);
-            this.notificationService.showNotification(err, NotificationType.ERROR);
+            this.notificationService.showNotification('Login failed! Check if user is verified or data entered is valid.', NotificationType.ERROR);
         });
     }
 }
