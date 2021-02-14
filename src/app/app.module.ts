@@ -27,6 +27,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatRadioModule} from "@angular/material/radio";
 import {TaskComponent} from './component/task/task.component';
 import {MatProgressBarModule} from "@angular/material/progress-bar";
+import { PreRegistrationComponent } from './component/pre-registration/pre-registration.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
         VerificationComponent,
         LoginComponent,
         ProfileComponent,
-        TaskComponent
+        TaskComponent,
+        PreRegistrationComponent
     ],
     imports: [
         BrowserModule,

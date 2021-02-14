@@ -13,10 +13,11 @@ export class RegistrationService {
 
   baseUrl = AppSettings.API_BASE_URL.concat('/user/registration/');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  startProcess(): Observable<Task> {
-    return this.http.get<Task>(this.baseUrl).pipe(map((res: Task) => res));
+  startProcess(role: string): Observable<Task> {
+    return this.http.get<Task>(this.baseUrl.concat(role)).pipe(map((res: Task) => res));
   }
 
   submitForm(taskId: string, value: FormSubmission[]) {

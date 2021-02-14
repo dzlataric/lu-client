@@ -5,8 +5,7 @@ import {Task} from "../../objects/task";
 import {FormField} from "../../objects/form-field";
 import {FormSubmission} from "../../objects/form-submission";
 import {NotificationService, NotificationType} from "../../service/notification.service";
-import {Router} from "@angular/router";
-import {MatRadioChange} from "@angular/material/radio";
+import {ActivatedRoute, ParamMap, Router} from "@angular/router";
 import {ValidatorsService} from "../../service/validators.service";
 
 @Component({
@@ -20,24 +19,24 @@ export class RegistrationComponent implements OnInit {
     task: Task | undefined;
     selectedGenres: any[] = [];
     formSubmission: FormSubmission[] = [];
-    roleSelection: string[] = ['Writer', 'Reader'];
-    selectedRole: string = null;
-    selectionFinalized: boolean = false;
 
     constructor(private registrationService: RegistrationService,
                 private notificationService: NotificationService,
                 private validatorsService: ValidatorsService,
+                private activatedRoute: ActivatedRoute,
                 private router: Router) {
     }
 
     ngOnInit(): void {
-        this.prepareRegistration();
+        this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
+            this.prepareRegistration(params.get('role'));
+        });
         this.selectedGenres = [];
         this.formSubmission = [];
     }
 
-    prepareRegistration() {
-        this.registrationService.startProcess().subscribe(
+    prepareRegistration(role: string) {
+        this.registrationService.startProcess(role).subscribe(
             (task: Task) => {
                 this.task = task;
                 this.task.formFields.forEach((formField: FormField) => {
@@ -75,11 +74,4 @@ export class RegistrationComponent implements OnInit {
         );
     }
 
-    checkCheckBoxvalue(event: MatRadioChange) {
-        this.selectedRole = event.value;
-    }
-
-    confirmSelection() {
-        this.selectionFinalized = true;
-    }
 }

@@ -5,10 +5,15 @@ import {VerificationComponent} from "./component/verification/verification.compo
 import {LoginComponent} from "./component/login/login.component";
 import {ProfileComponent} from "./component/profile/profile.component";
 import {TaskComponent} from "./component/task/task.component";
+import {PreRegistrationComponent} from "./component/pre-registration/pre-registration.component";
 
 const routes: Routes = [
   {
-    path: 'registration',
+    path: 'pre-registration',
+    component: PreRegistrationComponent,
+  },
+  {
+    path: 'registration/:role',
     component: RegistrationComponent,
   },
   {

@@ -1,0 +1,14 @@
+<div class="form-flex">
+    <mat-card>
+        <mat-radio-group aria-labelledby="example-radio-group-label"
+                         class="example-radio-group"
+                         (change)="checkCheckBoxValue($event)">
+            <mat-radio-button class="example-radio-button" *ngFor="let role of roleSelection" [value]="role">
+                {{role}}
+            </mat-radio-button>
+        </mat-radio-group>
+        <div class="button-flex-container" *ngIf="selectedRole !== null">
+            <button mat-raised-button color="primary" (click)="confirmSelection()">Select</button>
+        </div>
+    </mat-card>
+</div>
