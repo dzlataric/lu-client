@@ -8,7 +8,7 @@
                     <ng-container *ngIf="shouldBeActive(field.id)">
                         <mat-form-field *ngSwitchCase="'password'">
                             <mat-label>{{field.label}}</mat-label>
-                            <input matInput type="password" [formControlName]="field.id">
+                            <input matInput type="password" [formControlName]="field.id" (keyup)="checkPasswordMismatch()">
                             <mat-error *ngIf="form.get(field.id).invalid && (form.get(field.id).dirty || form.get(field.id).touched)">
                                 <div *ngIf="form.get(field.id).errors.required"> {{field.label}} is required</div>
                                 <div *ngIf="!form.get(field.id).errors.required && (form.get(field.id).errors.minlength || form.get(field.id).errors.maxlength)">
@@ -65,9 +65,10 @@
                 </div>
             </div>
         </mat-card-content>
+        <div *ngIf="passwordsDoNotMatch" style="color: red">Passwords should match!</div>
         <mat-card-actions>
             <div class="button-flex-container">
-                <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="submitForm()">Register</button>
+                <button mat-raised-button color="primary" [disabled]="form.invalid || passwordsDoNotMatch" (click)="submitForm()">Register</button>
             </div>
         </mat-card-actions>
     </mat-card>

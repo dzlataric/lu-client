@@ -10,6 +10,7 @@ import {ValidatorsService} from "../../service/validators.service";
 import {DependsOn} from "../../objects/depends-on";
 import {ValidationConstraint} from "../../objects/validation-constraint";
 
+
 @Component({
     selector: 'app-registration',
     templateUrl: './registration.component.html',
@@ -22,6 +23,8 @@ export class RegistrationComponent implements OnInit {
     selectedGenres: any[] = [];
     formSubmission: FormSubmission[] = [];
     dependencies: DependsOn[] = [];
+    passwordsDoNotMatch: boolean = false;
+
 
     constructor(private registrationService: RegistrationService,
                 private notificationService: NotificationService,
@@ -102,5 +105,16 @@ export class RegistrationComponent implements OnInit {
         let isCollection = this.task.formFields.filter(ff => ff.id === field && ff.type.name == 'collection').length > 0;
         return isCollection && value === '';
     }
+
+    checkPasswordMismatch() {
+        const password = this.form.get('password').value;
+        const repeatedPassword = this.form.get('repeatedPassword').value;
+        if (password.length > 0 || repeatedPassword.length > 0) {
+            this.passwordsDoNotMatch = password !== repeatedPassword;
+        } else {
+            this.passwordsDoNotMatch = false;
+        }
+    }
+
 
 }
