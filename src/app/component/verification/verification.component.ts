@@ -10,6 +10,8 @@ import {NotificationService, NotificationType} from "../../service/notification.
 })
 export class VerificationComponent implements OnInit {
 
+    loading: boolean = false;
+
     constructor(
         private registrationService: RegistrationService,
         private notificationService: NotificationService,
@@ -18,19 +20,23 @@ export class VerificationComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.loading = true;
         this.activatedRoute.paramMap.subscribe(
             (params: ParamMap) => {
                 this.registrationService.verify(params.get('code')).subscribe(() => {
                     this.notificationService.showNotification('Verification successful! You will be redirected in 5 seconds.', NotificationType.SUCCESS);
                     setTimeout(() => {
                             this.router.navigate(['/login']);
+                            this.loading = false;
                         },
                         5000);
                 }, error => {
                     this.router.navigate(['/']);
+                    this.loading = false;
                 })
             }, err => {
                 this.router.navigate(['/']);
+                this.loading = false;
             }
         )
     }

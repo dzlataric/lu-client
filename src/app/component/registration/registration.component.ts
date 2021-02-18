@@ -24,6 +24,7 @@ export class RegistrationComponent implements OnInit {
     formSubmission: FormSubmission[] = [];
     dependencies: DependsOn[] = [];
     passwordsDoNotMatch: boolean = false;
+    loading: boolean = false;
 
 
     constructor(private registrationService: RegistrationService,
@@ -81,6 +82,7 @@ export class RegistrationComponent implements OnInit {
 
 
     submitForm() {
+        this.loading = true;
         Object.keys(this.form.value).forEach(
             key => {
                 if (this.isEmptyCollection(key, this.form.value[key])) {
@@ -93,10 +95,12 @@ export class RegistrationComponent implements OnInit {
             res => {
                 this.notificationService.showNotification('Registered successfully!', NotificationType.SUCCESS);
                 this.router.navigate(['/']);
+                this.loading = false;
             },
             err => {
                 console.log(err);
                 this.notificationService.showNotification(err, NotificationType.ERROR);
+                this.loading = false;
             }
         );
     }
